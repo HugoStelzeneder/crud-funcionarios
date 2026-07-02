@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tsc --version)",
+      "Bash(npm ls *)",
+      "Bash(git --version)",
+      "Bash(git config *)",
+      "Bash(gh --version)"
+    ]
+  }
+}

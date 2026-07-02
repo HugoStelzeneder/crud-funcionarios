@@ -1,0 +1,8 @@
+# Dependências (reconstruíveis via npm install)
+node_modules/
+
+# Código compilado
+dist/
+
+# Variáveis de ambiente (segredos)
+.env
