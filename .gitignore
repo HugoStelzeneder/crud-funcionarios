@@ -6,3 +6,6 @@ dist/
 
 # Variáveis de ambiente (segredos)
 .env
+
+# Configuração local do Claude Code
+.claude/
