@@ -19,11 +19,11 @@ export enum Status {
 
 
 export interface Funcionario {
-    id: string;
+    readonly id: string;
     nome: string;
     sobrenome: string;
     email: string;
-    cpf: string;
+    readonly cpf: string;
     dataNascimento: Date;
     telefone?: string;
     cargo: string;
@@ -31,7 +31,7 @@ export interface Funcionario {
     salario: number;
     dataAdmissao: Date;
     status: Status;
-    criadoEm: Date;
+    readonly criadoEm: Date;
     atualizadoEm: Date;
 
 }
