@@ -30,5 +30,6 @@ async function filtrarPorDepartamento(departamento: Departamento): Promise<Funci
 async function demitir(id: string): Promise<Funcionario> {
     const funcionario = await buscarPorId(id);
     funcionario.status = Status.INATIVO;
+    funcionario.atualizadoEm = new Date();
     return funcionario;
 }
