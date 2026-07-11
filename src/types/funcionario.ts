@@ -37,3 +37,5 @@ export interface Funcionario {
 }
 
 export type CriarFuncionarioInput = Omit<Funcionario, "id" | "status" | "criadoEm" | "atualizadoEm">;
+
+export type AtualizarFuncionarioInput = Partial<Omit<Funcionario, "id" | "cpf" | "criadoEm">>;
