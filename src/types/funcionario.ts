@@ -35,3 +35,5 @@ export interface Funcionario {
     atualizadoEm: Date;
 
 }
+
+export type CriarFuncionarioInput = Omit<Funcionario, "id" | "status" | "criadoEm" | "atualizadoEm">;
