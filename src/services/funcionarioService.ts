@@ -1,4 +1,4 @@
-import { Funcionario, Departamento, Status } from "../types/funcionario";
+import { Funcionario, Departamento, Status, CriarFuncionarioInput } from "../types/funcionario";
 
 const funcionarios: Funcionario[] = [];
 
@@ -32,4 +32,20 @@ async function demitir(id: string): Promise<Funcionario> {
     funcionario.status = Status.INATIVO;
     funcionario.atualizadoEm = new Date();
     return funcionario;
+}
+
+async function criarFuncionario(dados: CriarFuncionarioInput): Promise<Funcionario> {
+    await esperar(500);
+
+    const agora = new Date();
+    const novoFuncionario: Funcionario = {
+        id: crypto.randomUUID(),
+        ...dados,
+        status: Status.ATIVO,
+        criadoEm: agora,
+        atualizadoEm: agora
+    };
+
+    funcionarios.push(novoFuncionario);
+    return novoFuncionario;
 }
