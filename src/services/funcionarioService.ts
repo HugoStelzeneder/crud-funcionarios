@@ -1,4 +1,4 @@
-import { Funcionario, Departamento, Status, CriarFuncionarioInput } from "../types/funcionario";
+import { Funcionario, Departamento, Status, CriarFuncionarioInput, AtualizarFuncionarioInput } from "../types/funcionario";
 
 const funcionarios: Funcionario[] = [];
 
@@ -19,6 +19,15 @@ async function buscarPorId(id: string): Promise<Funcionario> {
     } else {
         throw new Error("Funcionario não encontrado")
     }
+}
+
+async function atualizarFuncionario(id: string, dados: AtualizarFuncionarioInput): Promise<Funcionario> {
+    const funcionario = await buscarPorId(id);
+
+    Object.assign(funcionario, dados);
+    funcionario.atualizadoEm = new Date();
+
+    return funcionario;
 }
 
 async function filtrarPorDepartamento(departamento: Departamento): Promise<Funcionario[]> {
