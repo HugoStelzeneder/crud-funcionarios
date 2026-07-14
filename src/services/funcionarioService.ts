@@ -6,12 +6,12 @@ function esperar(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function listarFuncionarios(): Promise<Funcionario[]> {
+export async function listarFuncionarios(): Promise<Funcionario[]> {
     await esperar(300);
     return funcionarios;
 }
 
-async function buscarPorId(id: string): Promise<Funcionario> {
+export async function buscarPorId(id: string): Promise<Funcionario> {
     await esperar(300)
     const funcionarioEncontrado = funcionarios.find(func => func.id === id);
     if (funcionarioEncontrado) {
@@ -21,7 +21,7 @@ async function buscarPorId(id: string): Promise<Funcionario> {
     }
 }
 
-async function atualizarFuncionario(id: string, dados: AtualizarFuncionarioInput): Promise<Funcionario> {
+export async function atualizarFuncionario(id: string, dados: AtualizarFuncionarioInput): Promise<Funcionario> {
     const funcionario = await buscarPorId(id);
 
     Object.assign(funcionario, dados);
@@ -30,20 +30,20 @@ async function atualizarFuncionario(id: string, dados: AtualizarFuncionarioInput
     return funcionario;
 }
 
-async function filtrarPorDepartamento(departamento: Departamento): Promise<Funcionario[]> {
+export async function filtrarPorDepartamento(departamento: Departamento): Promise<Funcionario[]> {
     await esperar(300);
     const funcionariosDoDepartamento = funcionarios.filter(func => func.departamento === departamento);
     return funcionariosDoDepartamento;
 }
 
-async function demitir(id: string): Promise<Funcionario> {
+export async function demitir(id: string): Promise<Funcionario> {
     const funcionario = await buscarPorId(id);
     funcionario.status = Status.INATIVO;
     funcionario.atualizadoEm = new Date();
     return funcionario;
 }
 
-async function criarFuncionario(dados: CriarFuncionarioInput): Promise<Funcionario> {
+export async function criarFuncionario(dados: CriarFuncionarioInput): Promise<Funcionario> {
     await esperar(500);
 
     const agora = new Date();
