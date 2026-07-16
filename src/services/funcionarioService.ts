@@ -1,4 +1,10 @@
-import { Funcionario, Departamento, Status, CriarFuncionarioInput, AtualizarFuncionarioInput } from "../types/funcionario";
+import { Departamento, Status } from "../types/funcionario";
+
+import type {
+    Funcionario,
+    CriarFuncionarioInput,
+    AtualizarFuncionarioInput,
+} from "../types/funcionario";
 
 const funcionarios: Funcionario[] = [];
 
