@@ -1,3 +1,6 @@
+import "dotenv/config";
+
+
 import {
     criarFuncionario,
     listarFuncionarios,
@@ -8,6 +11,11 @@ import {
 } from "./services/funcionarioService";
 
 import { Departamento } from "./types/funcionario";
+
+
+console.log("Porta configurada:", process.env.PORT);
+console.log("Ambiente:", process.env.NODE_ENV);
+
 
 async function main() {
     console.log("=== INÍCIO ===\n");
