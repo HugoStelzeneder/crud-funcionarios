@@ -1,4 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
+import { buscarPorIdController } from "../controllers/funcionarioController";
+
 
 const router = Router();
 
@@ -14,23 +16,6 @@ function validarId(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
-// GET /funcionarios/:id
-router.get("/:id", validarId, (req, res) => {
-    const id = req.params.id;
-
-    if (id === "0") {
-        res.status(404).json({
-            erro: "Funcionário não encontrado",
-            idBuscado: id
-        });
-        return;
-    }
-
-    res.status(200).json({
-        id: id,
-        nome: "Funcionário Exemplo",
-        mensagem: `Funcionário ${id} encontrado`
-    });
-});
+router.get("/:id", validarId, buscarPorIdController);
 
 export { router };
