@@ -50,6 +50,27 @@ export async function demitir(id: string): Promise<Funcionario> {
 }
 
 export async function criarFuncionario(dados: CriarFuncionarioInput): Promise<Funcionario> {
+    //validação temporaria - Zod futuramente
+    if (!dados.nome || dados.nome.trim() === "") {
+        throw new Error("Nome é obrigatório.");
+    }
+
+    if (!dados.sobrenome || dados.sobrenome.trim() === "") {
+        throw new Error("Sobrenome é obrigatório.");
+    }
+
+    if (!dados.email || !dados.email.includes("@")) {
+        throw new Error("Email inválido.");
+    }
+
+    if (!dados.cpf || dados.cpf.length < 11) {
+        throw new Error("CPF inválido.");
+    }
+
+    if (typeof dados.salario !== "number" || dados.salario <= 0) {
+        throw new Error("Salário inválido.");
+    }
+
     await esperar(500);
 
     const agora = new Date();
