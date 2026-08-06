@@ -1,5 +1,11 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { buscarPorIdController } from "../controllers/funcionarioController";
+import {
+    buscarPorIdController,
+    listarController,
+    criarController,
+    atualizarController,
+    demitirController
+} from "../controllers/funcionarioController";
 
 
 const router = Router();
@@ -16,6 +22,10 @@ function validarId(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
+router.get("/", listarController);
 router.get("/:id", validarId, buscarPorIdController);
+router.post("/", criarController);
+router.put("/:id", validarId, atualizarController);
+router.delete("/:id", validarId, demitirController);
 
 export { router };
