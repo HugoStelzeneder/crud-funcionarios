@@ -11,3 +11,38 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum Departamento {
+  ENGENHARIA
+  PRODUTO
+  DESIGN
+  MARKETING
+  VENDAS
+  RH
+  FINANCEIRO
+  OPERACOES
+}
+
+enum Status {
+  ATIVO
+  INATIVO
+  FERIAS
+  AFASTADO
+}
+
+model Funcionario {
+  id             String       @id @default(uuid())
+  nome           String
+  sobrenome      String
+  email          String       @unique
+  cpf            String       @unique
+  dataNascimento DateTime
+  telefone       String?
+  cargo          String
+  departamento   Departamento
+  salario        Decimal
+  dataAdmissao   DateTime
+  status         Status       @default(ATIVO)
+  criadoEm       DateTime     @default(now())
+  atualizadoEm   DateTime     @updatedAt
+}
