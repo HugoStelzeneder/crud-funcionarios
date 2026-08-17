@@ -9,7 +9,6 @@ dist/
 
 # Configuração local do Claude Code
 .claude/
-/src/generated/prisma
 .windsurf/
 .agents/
 skills-lock.json
