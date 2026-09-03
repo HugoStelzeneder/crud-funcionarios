@@ -1,4 +1,5 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
+import { Prisma } from "@prisma/client";
 import {
     buscarPorId,
     listarFuncionarios,
@@ -8,15 +9,13 @@ import {
 } from "../services/funcionarioService";
 
 export async function buscarPorIdController(req: Request, res: Response) {
-    const id = req.params.id as string;
-
     try {
-        const funcionario = await buscarPorId(id);
+        const funcionario = await buscarPorId(req.params.id as string);
         res.status(200).json(funcionario);
     } catch (erro) {
         res.status(404).json({
             erro: "Funcionário não encontrado",
-            idBuscado: id
+            idBuscado: req.params.id
         });
     }
 }
@@ -28,30 +27,38 @@ export async function listarController(req: Request, res: Response) {
 
 export async function criarController(req: Request, res: Response) {
     try {
-        const dados = req.body;
-
-        // Converte strings de data pra Date
-        dados.dataNascimento = new Date(dados.dataNascimento);
-        dados.dataAdmissao = new Date(dados.dataAdmissao);
-
-        const funcionario = await criarFuncionario(dados);
+        const funcionario = await criarFuncionario(req.body);
         res.status(201).json(funcionario);
     } catch (erro) {
-        res.status(400).json({
-            erro: "Erro ao criar funcionário",
+        if (erro instanceof Prisma.PrismaClientKnownRequestError) {
+            if (erro.code === "P2002") {
+                const campo = (erro.meta?.target as string[])?.join(", ") ?? "campo único";
+                return res.status(409).json({
+                    erro: "Conflito de dados",
+                    detalhe: `Já existe funcionário com esse ${campo}.`
+                });
+            }
+        }
+        res.status(500).json({
+            erro: "Erro interno ao criar funcionário",
             detalhe: (erro as Error).message
         });
     }
 }
 
-// atualizar
 export async function atualizarController(req: Request, res: Response) {
-    const id = req.params.id as string;
-
     try {
-        const funcionario = await atualizarFuncionario(id, req.body);
+        const funcionario = await atualizarFuncionario(req.params.id as string, req.body);
         res.status(200).json(funcionario);
     } catch (erro) {
+        if (erro instanceof Prisma.PrismaClientKnownRequestError) {
+            if (erro.code === "P2002") {
+                return res.status(409).json({
+                    erro: "Conflito de dados",
+                    detalhe: "Já existe funcionário com esses dados únicos."
+                });
+            }
+        }
         res.status(404).json({
             erro: "Erro ao atualizar",
             detalhe: (erro as Error).message
@@ -59,12 +66,9 @@ export async function atualizarController(req: Request, res: Response) {
     }
 }
 
-// demitir
 export async function demitirController(req: Request, res: Response) {
-    const id = req.params.id as string;
-
     try {
-        const funcionario = await demitir(id);
+        const funcionario = await demitir(req.params.id as string);
         res.status(200).json(funcionario);
     } catch (erro) {
         res.status(404).json({

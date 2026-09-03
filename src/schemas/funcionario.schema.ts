@@ -43,3 +43,7 @@ export const atualizarFuncionarioSchema = z.object({
     dataAdmissao: z.coerce.date().optional(),
     status: z.enum(["ATIVO", "INATIVO", "FERIAS", "AFASTADO"]).optional()
 });
+
+// Tipos gerados automaticamente pelos schemas
+export type CriarFuncionarioInput = z.infer<typeof criarFuncionarioSchema>;
+export type AtualizarFuncionarioInput = z.infer<typeof atualizarFuncionarioSchema>;
