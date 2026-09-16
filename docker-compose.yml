@@ -1,0 +1,32 @@
+services:
+  # ============ Serviço 1: API Node/TS ============
+  api:
+    build: . # constrói usando Dockerfile
+    container_name: api-desafio
+    ports:
+      - "3000:3000" # host:container
+    env_file:
+      - .env
+    depends_on:
+      - db # espera db subir primeiro
+    volumes:
+      - .:/app # sincroniza código (hot reload em dev)
+      - /app/node_modules # exceção: não sobrescreve node_modules
+
+  # ============ Serviço 2: PostgreSQL ============
+  db:
+    image: postgres:16 # imagem pronta do Docker Hub
+    container_name: db-desafio
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      #        ^^ volume nomeado pra persistir dados
+
+      # ============ Volumes nomeados ============
+volumes:
+  postgres-data:
