@@ -12,3 +12,13 @@ dist/
 .windsurf/
 .agents/
 skills-lock.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# Windows
+Thumbs.db
+
+# OS
+.DS_Store
